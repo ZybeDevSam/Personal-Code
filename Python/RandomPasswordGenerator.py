@@ -1,17 +1,17 @@
 # By: Sam Belin
 # Random Password Generator
 import random
+import string
 
 
 def password(size, tf_uppercase, tf_lowercase, tf_numbers_list, tf_special_chars, tf_website_break, includeDups):
     check = 0
     # lists
     total_list = []
-    uppercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-                 "U", "V", "W", "X", "Y", "Z"]
-    lowercase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-                 "u", "v", "w", "x", "y", "z"]
-    numbers_list = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+    uppercase = list(string.ascii_uppercase)
+    lowercase = list(string.ascii_lowercase)
+    numbers_list = list(string.digits)
+    # i wanted to separate some of the characters in case the backend database is not coded correctly
     special_chars = ["!", "@", "#", "$", "%", "^", "&", "*", "-", "_", "+"]
     website_breakers = ["(", "{", "}", "[", "]", "(", ")", "/", "\\", "'", "`", "~", ",", ";", ":", ".", "<", ">",
                         ")", '"']
@@ -38,7 +38,7 @@ def password(size, tf_uppercase, tf_lowercase, tf_numbers_list, tf_special_chars
         check = check + 1
 
     if check == 5:
-        print("you did not put anything in please put in something")
+        print("you didn't put anything in. please try again")
         exit(0)
 
     return_string = ""
@@ -92,4 +92,7 @@ def createpassword():
 
     print(password(length, passuppercase, passlowercase, passnumbers, passspecial, passwebsite, passinclude))
 
-createpassword()
+try:
+    createpassword()
+except:
+    print("you didn't input anything")
