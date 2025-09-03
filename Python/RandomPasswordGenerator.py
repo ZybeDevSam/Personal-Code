@@ -1,7 +1,6 @@
 # By: Sam Belin
 # Random Password Generator
-import random
-import string
+import random,string,sys
 
 
 def password(size, tf_uppercase, tf_lowercase, tf_numbers_list, tf_special_chars, tf_website_break, includeDups):
@@ -44,7 +43,7 @@ def password(size, tf_uppercase, tf_lowercase, tf_numbers_list, tf_special_chars
     return_string = ""
     if includeDups:
         for i in range(size):
-            return_string = return_string + total_list[random.randint(0, (len(total_list) - 1))]
+            return ''.join(total_list[random.randint(0, (len(total_list) - 1))])
     else:
         while (len(return_string)) != size:
             p = ""
@@ -92,7 +91,6 @@ def createpassword():
 
     print(password(length, passuppercase, passlowercase, passnumbers, passspecial, passwebsite, passinclude))
 
-try:
-    createpassword()
-except:
-    print("you didn't input anything")
+    sys.exit(0)
+
+createpassword()
