@@ -5,36 +5,21 @@ import random,string,sys
 
 def password(size, tf_uppercase, tf_lowercase, tf_numbers_list, tf_special_chars, tf_website_break, includeDups):
     check = 0
-    # lists
-    total_list = []
-    uppercase = list(string.ascii_uppercase)
-    lowercase = list(string.ascii_lowercase)
-    numbers_list = list(string.digits)
-    # i wanted to separate some of the characters in case the backend database is not coded correctly
-    special_chars = ["!", "@", "#", "$", "%", "^", "&", "*", "-", "_", "+"]
-    website_breakers = ["(", "{", "}", "[", "]", "(", ")", "/", "\\", "'", "`", "~", ",", ";", ":", ".", "<", ">",
-                        ")", '"']
 
-    if tf_uppercase:
-        total_list.extend(uppercase)
-    else:
-        check = check + 1
-    if tf_lowercase:
-        total_list.extend(lowercase)
-    else:
-        check = check + 1
-    if tf_numbers_list:
-        total_list.extend(numbers_list)
-    else:
-        check = check + 1
-    if tf_special_chars:
-        total_list.extend(special_chars)
-    else:
-        check = check + 1
-    if tf_website_break:
-        total_list.extend(website_breakers)
-    else:
-        check = check + 1
+    char_sets = {
+        tf_uppercase: list(string.ascii_uppercase),
+        tf_lowercase: list(string.ascii_lowercase),
+        tf_numbers_list: list(string.digits),
+        # i wanted to separate some of the characters in case the backend database is not coded correctly
+        tf_special_chars: ["!", "@", "#", "$", "%", "^", "&", "*", "-", "_", "+"],
+        tf_website_break: ["(", "{", "}", "[", "]", "(", ")", "/", "\\", "'", "`", "~", ",", ";", ":", ".", "<", ">", ")", '"']
+    }
+
+    # replaces
+    total_list = [c for flag, chars in char_sets.items() if flag for c in chars]
+    if not total_list:
+        print("you didn't put anything in. please try again")
+        sys.exit(0)
 
     if check == 5:
         print("you didn't put anything in. please try again")
@@ -43,7 +28,7 @@ def password(size, tf_uppercase, tf_lowercase, tf_numbers_list, tf_special_chars
     return_string = ""
     if includeDups:
         for i in range(size):
-            return ''.join(total_list[random.randint(0, (len(total_list) - 1))])
+            return_string = return_string + total_list[random.randint(0, (len(total_list) - 1))]
     else:
         while (len(return_string)) != size:
             p = ""
